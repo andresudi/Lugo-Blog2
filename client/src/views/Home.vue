@@ -2,6 +2,7 @@
   <v-container fluid>
     <br>
     <br>
+    <br>
     <Carousel></Carousel>
     <v-layout align-center>
       <v-flex>

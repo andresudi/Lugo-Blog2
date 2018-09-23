@@ -1,15 +1,23 @@
 <template>
-    <div class="col-md-7">
-        <div v-for="(article, i) in articles" :key="i" class="card mb-4">
-            <img class="card-img-top" v-bind:src="article.image" alt="Card image cap">
-            <div class="card-body">
-                <h2 class="card-title">{{ article.title }}</h2>
-                <p class="card-text">{{ article.description }}</p>
-                <button type="button" class="btn btn-success" style="margin-right: 5px;">Edit</button>
-                <button type="button" class="btn btn-danger" @click="deleteArticle(article)">Delete</button>
-            </div>
-            <div class="card-footer text-muted" style="color: black;">
-                Posted on {{ article.createdAt | moment("dddd, MMMM Do YYYY, h:mm a")}} by {{ article.userId.name }}
+    <div class="col-md-8">
+        <div class="row">
+            <div class="col-md-6" v-for="(article, i) in articles" :key="i" >
+                <div class="card mb-4">
+                    <img class="card-img-top" v-bind:src="article.image" alt="Card image cap" style="height: 320px;">
+                    <div class="card-body">
+                        <h2 class="card-title">{{ article.title }}</h2>
+                        <router-link :to="`/myarticle/edit/${article._id}`">
+                            <button type="button" class="btn btn-success" style="margin-right: 5px;">Edit</button>
+                        </router-link>
+                        <button type="button" class="btn btn-danger" @click="deleteArticle(article)" style="margin-right: 5px;">Delete</button>
+                        <router-link :to="`/myarticle/${article ._id}`">
+                            <button type="button" class="btn btn-warning">Show Detail</button>
+                        </router-link>
+                    </div>
+                    <div class="card-footer text-muted" style="color: black;">
+                        Posted on {{ article.createdAt | moment("dddd, MMMM Do YYYY, h:mm a")}} by {{ article.userId.name }}
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -38,8 +46,8 @@
                         }
                     })
                     .then(data => {
-                        console.log(data.data.data);
                         this.articles = data.data.data;
+    
                     })
                     .catch(err => {
                         console.log(err);
@@ -55,8 +63,6 @@
                         }
                     })
                     .then((result) => {
-    
-    
                         swal(result.data.message, '', 'success')
                         this.actions = result
     
@@ -64,21 +70,17 @@
                     .catch((err) => {
                         console.log(err);
                     })
-            }
+            },
         },
         created() {
             this.myArticle()
         },
         watch: {
-            "$route.params.id": function() {
-                this.myArticle()
-            },
             actions: function(newData, oldData) {
-                console.log('=====>>>>>', newData);
-                console.log('xxxxxx', oldData)
                 if (newData) {
                     this.myArticle()
                 }
+                console.log(oldData)
             }
         }
     };

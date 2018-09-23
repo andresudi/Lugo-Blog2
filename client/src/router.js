@@ -37,16 +37,16 @@ export default new Router({
           component: () => import('./components/Article/CreateArticle.vue')
         },
         {
-          path: 'myarticle/edit/:id',
+          path: '/myarticle/edit/:id',
           name: 'EditArticle',
           component: () => import('./components/Article/EditArticle.vue')
         },
+        {
+          path: '/myarticle/:id',
+          name: 'DetailMyArticle',
+          component: () => import('./components/Article/DetailMyArticle.vue')
+        }
       ]
     },
-    {
-      path: '/detail',
-      name: 'DetailArticle',
-      component: () => import('./components/Article/DetailArticle.vue')
-    }
   ]
 })

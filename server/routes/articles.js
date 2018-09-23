@@ -10,7 +10,7 @@ const {
   addComment,
   deleteComment
 } = require("../controllers/articleController");
-const { isLogin, authenticatedUser } = require("../middlewares/auth");
+const { isLogin } = require("../middlewares/auth");
 const images = require("../helpers/image.js");
 
 router.post(
@@ -29,7 +29,7 @@ router.post(
 router.get("/", getArticle);
 router.post('/', isLogin, createArticle)
 
-router.put("/:id", isLogin, authenticatedUser, editArticle);
+router.put("/:id", isLogin, editArticle);
 router.delete("/:id", isLogin, deleteArticle);
 
 router.get("/myarticle", isLogin, getMyArticle);

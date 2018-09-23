@@ -42,7 +42,7 @@
             addArticle: function() {
                 let formdata = new FormData()
                 formdata.append('image', this.image)
-                axios.post('http://localhost:3000/articles/upload', formdata)
+                axios.post(`${this.baseUrl}/articles/upload`, formdata)
                     .then((result) => {
                         axios({
                                 method: 'POST',
@@ -58,8 +58,6 @@
                             })
                             .then((data) => {
                                 console.log(data);
-                                console.log(',msasuk');
-                                
                                 this.$router.push('/myarticle')
                             })
                             .catch((err) => {
@@ -72,8 +70,8 @@
             },
     
             getImage(image) {
+                console.log(image);
                 this.image = image.target.files[0]
-    
             },
             cancel() {
                 this.$router.push('/myarticle')
@@ -82,8 +80,8 @@
     }
 </script>
 
-<style>
+<style scoped>
     .color {
-        background-color: transparent;
+        background-color: white;
     }
 </style>

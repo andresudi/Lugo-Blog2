@@ -33,16 +33,16 @@ const isLogin = (req, res, next) => {
 
 const authenticatedUser = (req, res) => {
     Article.findOne({
-        userId: req.params.id
+        _id: req.params.id
     })
-    .populate('userId')
+    .populate("userId")
     .then(function(data){
         console.log(data);
         next()
     })
     .catch(function(err){
         res.status(500).json({
-            message : `access daniend`
+            message : `access denied`
         })
     })
 }
