@@ -18,24 +18,26 @@
             </div>
         </div>
     
-        <div class="card text-center">
-            <div class="card-header">
-                Featured
+        <div>
+            <h3 style="color: white;">All Comments</h3>
+            <div class="card text-center" v-for="(comment, i) in oneArticle.comments" v-bind:key="i">
+                <div class="card-header">
+                    <strong>Posted By: {{ comment.name }} </strong>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ comment.comment }}</h5>
+                    <a href="#" style="margin-left: 600px;" class="btn btn-danger" @click="deleteComment(comment._id)" v-if="comment.userId == userLogin && token || oneArticle.userId == userLogin && token">Delete Comment</a>
+                </div>
+                <div class="card-footer text-muted">
+                    {{ comment.date | moment("dddd, MMMM Do YYYY, h:mm a") }}
+                </div>
             </div>
-            <div class="card-body">
-                <h5 class="card-title">Special title treatment</h5>
-                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
-            </div>
-            <div class="card-footer text-muted">
-                2 days ago
-            </div>
-        </div>
-        <br>
-        <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="Write your comment here.." aria-label="Recipient's username" aria-describedby="button-addon2" v-model="comment">
-            <div class="input-group-append">
-                <button class="btn btn-success" type="button" id="button-addon2" @click="addComment">Comment</button>
+            <br>
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Write your comment here.." aria-label="Recipient's username" aria-describedby="button-addon2" v-model="comment">
+                <div class="input-group-append">
+                    <button class="btn btn-success" type="button" id="button-addon2" @click="addComment">Comment</button>
+                </div>
             </div>
         </div>
     </div>
@@ -47,11 +49,12 @@
     export default {
         data() {
             return {
-                oneArticle: '',
+                oneArticle: "",
                 baseUrl: "http://localhost:3000",
-                actions: '',
+                actions: "",
                 token: localStorage.getItem("token"),
-                comment: '',
+                userLogin: localStorage.getItem("id"),
+                comment: ""
             };
         },
         methods: {
@@ -71,7 +74,6 @@
                     });
             },
             deleteArticle() {
-    
                 axios({
                         method: "DELETE",
                         url: this.baseUrl + `/articles/${this.$route.params.id}`,
@@ -81,7 +83,7 @@
                     })
                     .then(result => {
                         swal(result.data.message, "", "success");
-                        this.$router.push('/myarticle')
+                        this.$router.push("/myarticle");
                     })
                     .catch(err => {
                         console.log(err);
@@ -98,7 +100,6 @@
                     })
                     .then(data => {
                         this.articles = data.data.data;
-    
                     })
                     .catch(err => {
                         console.log(err);
@@ -107,33 +108,61 @@
     
             addComment() {
                 axios({
-                        method: 'PUT',
+                        method: "PUT",
                         url: `${this.baseUrl}/articles/comment/${this.$route.params.id}`,
                         headers: {
                             token: this.token
                         },
                         data: {
                             comment: this.comment
-                        },
+                        }
                     })
-                    .then((result) => {
-                        this.actions = result
-                        this.$router.push(`/myarticle/${this.$route.params.id}`)
+                    .then(result => {
+                        console.log("masuk add comment");
+                        console.log("ini result comment", result);
+                        this.actions = result;
+                        this.$router.push(`/myarticle/${this.$route.params.id}`);
                     })
-                    .catch((err) => {
+                    .catch(err => {
+                        console.log(err);
+                    });
+            },
+    
+            deleteComment(idComment) {
+                console.log(idComment);
+    
+                axios({
+                        method: "PUT",
+                        url: `${this.baseUrl}/articles/comment/${this.$route.params.id}/${idComment}/delete`,
+                        headers: {
+                            token: this.token
+                        }
+                    })
+                    .then(result => {
+                        console.log("masuk delete comment");
+                        console.log(result);
+                        this.actions = result;
+                        this.$router.push(`/myarticle/${this.$route.params.id}`);
+                    })
+                    .catch(err => {
                         console.log(err);
                     });
             }
         },
         created() {
             this.showDetail();
+            this.token = localStorage.getItem("token")
+            this.userLogin = localStorage.getItem("id")
         },
         watch: {
             actions: function(newData, oldData) {
                 if (newData) {
-                    this.showDetail()
+                    this.showDetail();
                 }
-                console.log(oldData)
+                console.log(oldData);
+            },
+            "$route.params.id": function() {
+                this.showDetail();
             }
         }
     };

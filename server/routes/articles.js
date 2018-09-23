@@ -36,6 +36,6 @@ router.get("/myarticle", isLogin, getMyArticle);
 router.get("/:id", getOneArticle);
 
 router.put("/comment/:id", isLogin, addComment);
-router.put("/comment/:id/delete", isLogin, deleteComment);
+router.put("/comment/:id/:idComment/delete", isLogin, deleteComment);
 
 module.exports = router;

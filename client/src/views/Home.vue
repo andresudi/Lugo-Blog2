@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid>
+  <div class="container">
     <br>
     <br>
     <br>
@@ -15,8 +15,11 @@
     <br>
     <br>
     <br>
-    <ArticleCard></ArticleCard>
-  </v-container>
+    <div class="row">
+      <SideBar></SideBar>
+      <ArticleCard></ArticleCard>
+    </div>
+  </div>
 </template>
 
 <script>

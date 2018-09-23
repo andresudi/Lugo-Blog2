@@ -164,46 +164,24 @@ const deleteArticle = (req, res) => {
 const addComment = (req, res) => {
   const { comment } = req.body;
   let loggedInUser = req.loggedInUser;
-  Article.findOne({
-    _id: req.params.id
-  })
-    .then(data => {
-      if (data) {
-        if (String(data.userId) == String(loggedInUser._id)) {
-          Article.update(
-            {
-              _id: req.params.id
-            },
-            {
-              $push: {
-                comments: {
-                  userId: decoded.id,
-                  name: decoded.name,
-                  comment: comment
-                }
-              }
-            }
-          )
-            .then(() => {
-              res.status(201).json({
-                message: `success add comment`
-              });
-            })
-            .catch(err => {
-              res.status(400).json({
-                message: err.message
-              });
-            });
-        } else {
-          res.status(400).json({
-            message: `You don't have access to do this action!`
-          });
+  Article.update(
+    {
+      _id: req.params.id
+    },
+    {
+      $push: {
+        comments: {
+          userId: loggedInUser.id,
+          name: loggedInUser.name,
+          comment: comment
         }
-      } else {
-        res.status(400).json({
-          message: `Data Not Found`
-        });
       }
+    }
+  )
+    .then(() => {
+      res.status(201).json({
+        message: `success add comment`
+      });
     })
     .catch(err => {
       res.status(400).json({
@@ -213,6 +191,7 @@ const addComment = (req, res) => {
 };
 
 const deleteComment = (req, res) => {
+  console.log(req.params);
   let loggedInUser = req.loggedInUser;
   Article.findOne({
     _id: req.params.id
@@ -225,7 +204,7 @@ const deleteComment = (req, res) => {
               _id: req.params.id
             },
             {
-              $pull: { comments: { _id: req.body.id_comment } }
+              $pull: { comments: { _id: req.params.idComment } }
             }
           )
             .then(() => {

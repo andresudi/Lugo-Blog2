@@ -16,9 +16,13 @@ var articleSchema = new Schema ({
         type: String
     },
     comments: [{
-        userId: { type: Schema.Types.ObjectId, ref: 'User' },
+        userId: { type: Schema.Types.ObjectId, ref: 'user' },
         name: String,
         comment: String,
+        date: {
+            type: Date,
+            default: new Date()
+        }
     }, 
     {
         timestamps: true

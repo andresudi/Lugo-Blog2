@@ -146,6 +146,7 @@
                     .then(data => {
                         let token = data.data.token;
                         localStorage.setItem("token", token);
+                        localStorage.setItem("id", data.data.id)
                         this.token = true;
                         this.email = "";
                         this.password = "";

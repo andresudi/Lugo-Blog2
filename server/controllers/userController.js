@@ -112,7 +112,8 @@ const login = (req, res) => {
           );
           res.status(200).json({
             message: `Successfully login`,
-            token: token
+            token: token,
+            id: data._id
           });
         } else {
           res.status(400).json({
