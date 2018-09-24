@@ -59,6 +59,8 @@ const deleteUser = (req, res) => {
 
 const register = (req, res) => {
   const { name, email, password } = req.body;
+  console.log(req.body);
+  
   User.findOne({
     email: email
   })
@@ -76,17 +78,23 @@ const register = (req, res) => {
             });
           })
           .catch(err => {
+            console.log('masuk input ngasal');
+        
             res.status(400).json({
               message: 'Please input correctly'
             });
           });
       } else {
+        console.log('masuk email duplicate');
+        
         res.status(400).json({
           message: "Email is already exist"
         });
       }
     })
     .catch(err => {
+      console.log('masuk error aja');
+        
       res.status(400).json({
         message: err.message
       });
@@ -113,7 +121,8 @@ const login = (req, res) => {
           res.status(200).json({
             message: `Successfully login`,
             token: token,
-            id: data._id
+            id: data._id,
+            name: data.name
           });
         } else {
           res.status(400).json({

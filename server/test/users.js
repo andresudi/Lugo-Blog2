@@ -19,8 +19,8 @@ describe("User", function() {
       )
       .then(function() {
         User.create({
-          name: "helboi",
-          email: "helboi@mail.com",
+          name: "majinbu",
+          email: "majinbu@mail.com",
           password: "123456"
         })
           .then(function() {
@@ -33,8 +33,10 @@ describe("User", function() {
   });
 
   afterEach(function(done) {
-    User.remove({})
-      .then(() => {
+    User.collection.drop()
+      .then((result) => {
+        console.log(result);
+        
         done();
       })
       .catch(err => {
@@ -48,8 +50,8 @@ describe("User", function() {
       .request(url)
       .post("/users/register")
       .send({
-        name: "huhahuhu",
-        email: "huhahuhu@mail.com",
+        name: "winsu",
+        email: "winsu@mail.com",
         password: "123456"
       })
       .end(function(err, res) {
@@ -57,8 +59,8 @@ describe("User", function() {
         expect(res.body.data).to.have.property("name");
         expect(res.body.data).to.have.property("email");
         expect(res.body.data).to.have.property("password");
-        expect(res.body.data.name).to.equal("huhahuhu");
-        expect(res.body.data.email).to.equal("huhahuhu@mail.com");
+        expect(res.body.data.name).to.equal("winsu");
+        expect(res.body.data.email).to.equal("winsu@mail.com");
         expect(res.body.data.password).to.not.equal("123456");
         done();
       });
@@ -69,7 +71,7 @@ describe("User", function() {
       .request(url)
       .post("/users/login")
       .send({
-        email: "helboi@mail.com",
+        email: "majinbu@mail.com",
         password: "123456"
       })
       .end(function(err, res) {
@@ -77,12 +79,12 @@ describe("User", function() {
         expect(res.body).to.be.a("object");
         expect(res.body.message).to.equal("Successfully login");
         expect(res.body.token).to.not.equal("");
-        expect(res.body).to.have.all.keys('token', 'message')
+        expect(res.body).to.have.all.keys('token', 'message', 'id', 'name')
         done();
       });
   });
 
-  it("POST /users/login should email is invalid", function(done) {
+  it("POST /users/login should give email is invalid", function(done) {
     chai
       .request(url)
       .post("/users/login")

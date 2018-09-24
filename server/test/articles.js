@@ -10,6 +10,7 @@ require("dotenv").config();
 let userId = "";
 let articleId = "";
 let token = "";
+let commentId = "";
 
 chai.use(chaiHttp);
 describe("Article", function() {
@@ -107,26 +108,6 @@ describe("Article", function() {
       });
   });
 
-  it("GET /articles/:id should return of object article by article id", function(done) {
-    chai
-      .request(url)
-      .get(`/articles/${articleId}`)
-      .end(function(err, res) {
-        expect(res).to.have.status(201);
-        expect(res.body).to.be.a("object");
-        expect(res.body.message).to.equal(`articles with id ${articleId}`);
-        expect(res.body.data).to.be.a("object");
-        expect(res.body.data).to.have.property("_id");
-        expect(res.body.data).to.have.property("title");
-        expect(res.body.data).to.have.property("description");
-        expect(res.body.data).to.have.property("userId");
-        expect(res.body.data).to.have.property("image");
-        expect(res.body.data).to.have.property("createdAt");
-        expect(res.body.data.title).to.equal("test title");
-        expect(res.body.data.description).to.equal("umaga");
-        done();
-      });
-  });
   it("GET /articles/myarticle should return array of object articles by userId", function(done) {
     chai
       .request(url)
@@ -149,6 +130,59 @@ describe("Article", function() {
         done();
       });
   });
+
+  it("PUT /articles/comment/:id should add new comment", function(done) {
+    chai
+      .request(url)
+      .put(`/articles/comment/${articleId}`)
+      .set("token", token)
+      .send({
+        comment: "comment tessssst"
+      })
+      .end(function(err, res) {
+        expect(res).to.have.status(201);
+        expect(res.body).to.be.a("object");
+        expect(res.body.message).to.equal("success add comment");
+        done();
+      });
+  });
+
+
+  it("GET /articles/:id should return of object article by article id", function(done) {
+    chai
+      .request(url)
+      .get(`/articles/${articleId}`)
+      .end(function(err, res) {
+        commentId = res.body.data.comments[0]._id
+        expect(res).to.have.status(201);
+        expect(res.body).to.be.a("object");
+        expect(res.body.message).to.equal(`articles with id ${articleId}`);
+        expect(res.body.data).to.be.a("object");
+        expect(res.body.data).to.have.property("_id");
+        expect(res.body.data).to.have.property("title");
+        expect(res.body.data).to.have.property("description");
+        expect(res.body.data).to.have.property("userId");
+        expect(res.body.data).to.have.property("image");
+        expect(res.body.data).to.have.property("createdAt");
+        expect(res.body.data.title).to.equal("test title");
+        expect(res.body.data.description).to.equal("umaga");
+        done();
+      });
+  });
+
+  it("PUT /articles/comment/:id/:idComment/delete should delete a comment", function(done) {
+    chai
+      .request(url)
+      .put(`/articles/comment/${articleId}/${commentId}/delete`)
+      .set("token", token)
+      .end(function(err, res) {
+        expect(res).to.have.status(201);
+        expect(res.body).to.be.a("object");
+        expect(res.body.message).to.equal("success delete comment");
+        done();
+      });
+  });
+
   it("DELETE /articles/:id should delete article with article id", function(done) {
     chai
       .request(url)
