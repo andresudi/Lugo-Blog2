@@ -2,13 +2,14 @@
     <div>
         <nav class="navbar navbar-expand-lg fixed-top bg-danger">
             <div class="container">
-                <a>
-                    <v-btn type="button" to='/' tag='span' style="margin-right: 10px;"><strong>Home</strong></v-btn>
-                </a>
-                <a flat class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </a>
-                <v-btn v-if='token' to='/myarticle'><strong>My Article</strong></v-btn>
+                <router-link :to="`/`">
+                    <button type="button" tag='span' style="margin-right: 10px;"><strong>Home</strong></button>
+                </router-link>
+    
+                <router-link :to="`/myarticle/me`">
+                    <button v-if="token"><strong>My Article</strong></button>
+                </router-link>
+    
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto">
     
@@ -37,8 +38,8 @@
                                 <div v-if="errorRegister" class="alert alert-danger" role="alert">
                                     {{errorRegister}}
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
                                 </div>
                                 <a class="dropdown-item" href="#">Already have an account ? Login</a>
                             </div>
@@ -67,8 +68,8 @@
                                 <div v-if="errorLogin" class="alert alert-danger" role="alert">
                                     {{errorLogin}}
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                                            <span aria-hidden="true">&times;</span>
-                                                                        </button>
+                                                                                        <span aria-hidden="true">&times;</span>
+                                                                                    </button>
                                 </div>
                                 <a class="dropdown-item" href="#">Don't have an account ? Register</a>
                             </div>
@@ -77,7 +78,7 @@
     
                         <li v-if="token" class="nav-item dropdown">
                             <a>
-                                <v-btn flat @click="logout"><strong>Log Out</strong></v-btn>
+                                <button @click="logout"><strong>Log Out</strong></button>
                             </a>
                         </li>
                     </ul>
@@ -97,7 +98,7 @@
                 name: "",
                 email: "",
                 password: "",
-                baseUrl: "http://localhost:3000",
+                baseUrl: "https://blog-tdd.andresudi.club",
                 token: localStorage.getItem('token'),
                 isLogin: "",
                 errorLogin: "",
@@ -124,7 +125,7 @@
                         this.success = true;
                         swal(
                             `Hallo ${result.data.data.name}!`,
-                            "Please login now...",
+                            "Please login now",
                             "success"
                         );
                     })
@@ -147,6 +148,7 @@
                         let token = data.data.token;
                         localStorage.setItem("token", token);
                         localStorage.setItem("id", data.data.id)
+                        localStorage.setItem("name", data.data.name)
                         this.token = true;
                         this.email = "";
                         this.password = "";
@@ -165,7 +167,7 @@
                 this.$router.push('/')
             }
         },
-
+    
     };
 </script>
 

@@ -15,7 +15,7 @@
                             </router-link>
                         </div>
                         <div class="card-footer text-muted" style="color: black;">
-                            Posted on {{ article.createdAt | moment("dddd, MMMM Do YYYY, h:mm a")}} by {{ article.userId.name }}
+                            Posted on {{ article.createdAt | moment("dddd, MMMM Do YYYY, h:mm a")}}
                         </div>
                     </div>
                 </div>
@@ -32,7 +32,7 @@
             return {
                 token: localStorage.getItem("token"),
                 articles: [],
-                baseUrl: "http://localhost:3000",
+                baseUrl: "https://blog-tdd.andresudi.club",
                 actions: ""
             };
         },

@@ -17,7 +17,7 @@
     <br>
     <div class="row">
       <SideBar></SideBar>
-      <ArticleCard></ArticleCard>
+      <router-view></router-view>
     </div>
   </div>
 </template>
@@ -26,12 +26,14 @@
   import ArticleCard from '@/components/Article/ArticleCard'
   import Carousel from '@/components/Carousel'
   import SideBar from '@/components/SideBar'
+  import DetailArticle from '@/components/Article/DetailArticle'
   export default {
     name: 'home',
     components: {
       ArticleCard,
       Carousel,
-      SideBar
+      SideBar,
+      DetailArticle
     },
   }
 </script>

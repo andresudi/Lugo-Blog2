@@ -7,13 +7,15 @@
       <div class="card-body">
         <h2 class="card-title">{{ article.title }}</h2>
         <p class="card-text">{{ article.description.slice(0,200) }}....</p>
-        <a href="#" class="btn btn-primary">Read More &rarr;</a>
+        <router-link :to="`/${article._id}`">
+          <button class="btn btn-primary">Read More &rarr;</button>
+        </router-link>
       </div>
       <div class="card-footer text-muted">
         Posted on {{ article.createdAt | moment("dddd, MMMM Do YYYY, h:mm a")}} by {{ article.userId.name }}
       </div>
     </div>
-    
+  
     <!-- Pagination -->
     <ul class="pagination justify-content-center mb-4">
       <li class="page-item">
@@ -30,56 +32,56 @@
 </template>
 
 <script>
-import axios from "axios";
-export default {
-  data() {
-    return {
-      baseUrl: "http://localhost:3000",
-      articles: [],
-      show: [],
-      counter: 0
-    };
-  },
-  methods: {
-    allArticle() {
-      axios({
-        method: 'GET',
-        url: `${this.baseUrl}/articles`,
-      }) 
-      .then((data) => {
-        this.articles = data.data.data
-        this.show = []
-        this.articles.forEach((element, index) => {
-          if (index < this.counter + 2 && index >= this.counter) {
-            this.show.push(element)
-          }
-        })
-      })
-      .catch((err) => {
-        console.log(err);
-      })
+  import axios from "axios";
+  export default {
+    data() {
+      return {
+        baseUrl: "https://blog-tdd.andresudi.club",
+        articles: [],
+        show: [],
+        counter: 0
+      };
     },
-    next() {
-      this.counter += 2
+    methods: {
+      allArticle() {
+        axios({
+            method: 'GET',
+            url: `${this.baseUrl}/articles`,
+          })
+          .then((data) => {
+            this.articles = data.data.data
+            this.show = []
+            this.articles.forEach((element, index) => {
+              if (index < this.counter + 2 && index >= this.counter) {
+                this.show.push(element)
+              }
+            })
+          })
+          .catch((err) => {
+            console.log(err);
+          })
+      },
+      next() {
+        this.counter += 2
+      },
+      previous() {
+        this.counter -= 2
+      }
     },
-    previous() {
-      this.counter -= 2
-    }
-  },
-  created() {
-    this.allArticle()
-  },
-
-  watch: {
-    counter() {
+    created() {
       this.allArticle()
+    },
+  
+    watch: {
+      counter() {
+        this.allArticle()
+      }
     }
-  }
-};
+  };
 </script>
 
 <style>
-.card-body {
-  color: black;
-}
+  .card-body {
+    color: black;
+  }
 </style>

@@ -37,7 +37,7 @@
                 title: '',
                 description: '',
                 image: '',
-                baseUrl: 'http://localhost:3000',
+                baseUrl: 'https://blog-tdd.andresudi.club',
                 detailArticle: []
             }
         },
@@ -57,7 +57,7 @@
                     })
                     .then((data) => {
                         console.log(data);
-                        this.$router.push('/myarticle')
+                        this.$router.push('/myarticle/me')
                     }).catch((err) => {
                         console.log(err);
                     });

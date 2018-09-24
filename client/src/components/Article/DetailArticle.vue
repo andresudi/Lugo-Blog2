@@ -1,15 +1,11 @@
 <template>
-    <div class="col-md-7" style="margin: 0 auto;">
+    <div class="col-md-8" style="margin: 0 auto;">
         <div class="card mb-4">
             <img class="card-img-top" v-bind:src="oneArticle.image" alt="Card image cap" style="height: 550px;">
             <div class="card-body">
                 <h2 class="card-title">{{ oneArticle.title }}</h2>
                 <p class="card-text">{{ oneArticle.description }}</p>
-                <router-link :to="`/myarticle/edit/${oneArticle._id}`">
-                    <button type="button" class="btn btn-success" style="margin-right: 5px;">Edit</button>
-                </router-link>
-                <button type="button" class="btn btn-danger" @click="deleteArticle(oneArticle)" style="margin-right: 5px;">Delete</button>
-                <router-link :to="`/myarticle/me`">
+                <router-link :to="`/`">
                     <button type="button" class="btn btn-primary">Back</button>
                 </router-link>
             </div>
@@ -33,7 +29,7 @@
                 </div>
             </div>
             <br>
-            <div class="input-group mb-3">
+            <div class="input-group mb-3" v-if="token">
                 <input type="text" class="form-control" placeholder="Write your comment here.." aria-label="Recipient's username" aria-describedby="button-addon2" v-model="comment">
                 <div class="input-group-append">
                     <button class="btn btn-success" type="button" id="button-addon2" @click="addComment">Comment</button>
@@ -45,7 +41,6 @@
 
 <script>
     import axios from "axios";
-    import swal from "sweetalert";
     export default {
         data() {
             return {
@@ -73,38 +68,6 @@
                         console.log(err);
                     });
             },
-            deleteArticle() {
-                axios({
-                        method: "DELETE",
-                        url: this.baseUrl + `/articles/${this.$route.params.id}`,
-                        headers: {
-                            token: this.token
-                        }
-                    })
-                    .then(result => {
-                        swal(result.data.message, "", "success");
-                        this.$router.push("/myarticle/me");
-                    })
-                    .catch(err => {
-                        console.log(err);
-                    });
-            },
-    
-            myArticle() {
-                axios({
-                        method: "GET",
-                        url: this.baseUrl + "/articles/myarticle",
-                        headers: {
-                            token: this.token
-                        }
-                    })
-                    .then(data => {
-                        this.articles = data.data.data;
-                    })
-                    .catch(err => {
-                        console.log(err);
-                    });
-            },
     
             addComment() {
                 axios({
@@ -118,10 +81,8 @@
                         }
                     })
                     .then(result => {
-                        console.log("masuk add comment");
-                        console.log("ini result comment", result);
                         this.actions = result;
-                        this.$router.push(`/myarticle/${this.$route.params.id}`);
+                        this.$router.push(`/${this.$route.params.id}`);
                         this.comment = ''
                     })
                     .catch(err => {
@@ -143,7 +104,7 @@
                         console.log("masuk delete comment");
                         console.log(result);
                         this.actions = result;
-                        this.$router.push(`/myarticle/${this.$route.params.id}`);
+                        this.$router.push(`/${this.$route.params.id}`);
                     })
                     .catch(err => {
                         console.log(err);

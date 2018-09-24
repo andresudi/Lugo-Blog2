@@ -1,10 +1,10 @@
 <template>
-    <v-container fluid>
+    <div class="container">
         <div class="row bapak" style="margin-top: 70px; position: relative;">
             <SideBarArticle></SideBarArticle>
             <router-view></router-view>
         </div>
-    </v-container>
+    </div>
 </template>
 
 <script>
@@ -23,11 +23,12 @@
         data() {
             return {
                 isLogin: '',
-                detail: ''
+                detail: '',
+                token: localStorage.getItem('token')
             }
         },
         created() {
-
+            this.token = localStorage.getItem('token')
         },
     }
 </script>

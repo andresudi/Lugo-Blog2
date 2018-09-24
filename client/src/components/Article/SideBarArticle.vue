@@ -28,7 +28,7 @@ export default {
   data() {
     return {
       listMyArticles: [],
-      baseUrl: "http://localhost:3000"
+      baseUrl: "https://blog-tdd.andresudi.club"
     };
   },
   methods: {
