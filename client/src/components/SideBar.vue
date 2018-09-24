@@ -49,7 +49,7 @@ export default {
     listMy() {
       axios({
         method: "GET",
-        url: `${this.baseUrl}/articles/myarticle`,
+        url: `${this.baseUrl}/articles/`,
         headers: {
           token: localStorage.getItem("token")
         }
