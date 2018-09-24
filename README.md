@@ -11,7 +11,7 @@ portofolio blog with VUE CLI and TDD
 | /users/register | POST   | Register new account | name, email, password |
 | /users/login    | POST   | Login                | email, password       |
 
-## Item Routes
+## Article Routes
 
 | Route                                  | Method | Description                                                                   | Attributes                                          |
 | -------------------------------------- | ------ | ----------------------------------------------------------------------------- | --------------------------------------------------- |
@@ -22,4 +22,4 @@ portofolio blog with VUE CLI and TDD
 | /articles/:id                          | GET    | Get one article                                                               | id article on params                                |
 | /articles/:id                          | DELETE | delete a specific article (authenticated user)                                | id article on params                                |
 | /articles/comment/:id                  | POST   | add new comment (authenticated user)                                          | id article on params                                |
-| /articles/comment/:id/idComment/delete | DELETE | delete a comment (only user that have article and user who gives the comment) | id article on params, idComment on params                                |
+| /articles/comment/:id/idComment/delete | DELETE | delete a comment (only user that have article and user who gives the comment) | id article on params, idComment on params           |
