@@ -24,6 +24,6 @@ portofolio blog with VUE CLI and TDD
 | /articles/comment/:id                  | POST   | add new comment (authenticated user)                                          | id article on params                                |
 | /articles/comment/:id/:idComment/delete | DELETE | delete a comment (only user that have article and user who gives comment) | id article on params, idComment on params           |
 
-#### DEMO
+## DEMO
 
 https://lugo-blog.andresudi.club/
