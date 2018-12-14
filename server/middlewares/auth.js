@@ -37,8 +37,10 @@ const authenticatedUser = (req, res) => {
     })
     .populate("userId")
     .then(function(data){
-        console.log(data);
-        next()
+        if (data.userId._id == req.loggedInUser.id) {
+            next()
+        }   
+    
     })
     .catch(function(err){
         res.status(500).json({

@@ -2,7 +2,7 @@
     <!-- Sidebar Widgets Column -->
     <div class="col-md-4">
     
-        <!-- Search Widget -->
+        <!-- Search Widget
         <div class="card my-4">
             <h5 class="card-header">Search</h5>
             <div class="card-body">
@@ -13,7 +13,7 @@
                             </span>
                 </div>
             </div>
-        </div>
+        </div> -->
     
         <!-- Categories Widget -->
         <div class="card my-4">
